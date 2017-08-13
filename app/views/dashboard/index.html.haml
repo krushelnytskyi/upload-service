@@ -1,0 +1,30 @@
+.text-right.page-header
+  .row
+    .col-md-offset-9.col-md-3
+      = form_tag root_path, method: :get do
+        .input-group
+          = text_field_tag :search, params[:search], class: "form-control", placeholder: :search
+          .input-group-btn
+            = button_tag 'Search', class: 'btn btn-default'
+            = link_to 'Clear', root_path, class: 'btn btn-danger'
+%table.table.table-bordered
+  %tr
+    %th Company name
+    - @year_range.each do |y|
+      %th= y
+  - @companies.each do |c|
+    %tr
+      %td= link_to c.name, c
+      - @year_range.each do |y|
+        - if (c.uploads.select {|u| u.year == y && c.id == u.company.id}).any?
+          %td.success
+            - upload = (c.uploads.find {|u| u.year == y && c.id == u.company.id})
+            = link_to 'Download file', upload, target: :_blank
+            - if current_user.role == 'super_admin' || current_user.id == upload.user.id
+              &nbsp;
+              = link_to 'x', upload, method: :delete, data: {confirm: 'Are you sure?'}
+        - else  
+          %td= link_to 'Upload file', new_company_upload_path(c, y)
+- if current_user.role == 'super_admin'
+  = link_to 'Download All', download_all_upload_path, target: :_blank
+.pull-right= will_paginate @companies

@@ -1,0 +1,4 @@
+- if !flash.empty?
+  .alert.alert-info
+    - flash.each do |type, msg|
+      = msg

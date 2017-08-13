@@ -1,0 +1,9 @@
+%h3 Upload for "#{@upload.company.name}" company
+%h2.text-muted= @upload.year
+= form_for @upload, url: '/upload' do |f|
+  = f.hidden_field :company_id, value: @company.id
+  = f.hidden_field :year, value: @year
+  = f.label :path
+  = f.file_field :path
+  = button_tag(type: "submit", class: "orange-d2 pull-left") do
+    Save

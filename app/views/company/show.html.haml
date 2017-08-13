@@ -1,0 +1,14 @@
+%h2= @company.name
+.text-muted
+  Created by
+  = @company.user.email
+%hr
+= link_to 'delete', @company, method: :delete
+- if @company.uploads.any?
+  .list-group
+    - @company.uploads.each do |u|
+      .list-group-item
+        = link_to File.basename(u.path.url), u
+        .text-right= link_to :delete, u, method: :delete
+- else
+  %h2.text-muted No uploads available

@@ -1,0 +1,15 @@
+= form_for @user do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, autofocus: true, class: 'form-control'
+  .form-group
+    = f.label :email
+    = f.text_field :email, class: 'form-control'
+  .form-group
+    = f.label :password
+    = f.text_field :password, class: 'form-control'
+    .text-muted Leave blank if you don't want change password
+  .form-group
+    = f.label :role
+    = f.select :role, options_for_select(@user.class.roles, @user.role), {}, {class: 'form-control'}
+  = f.submit "Save user", class: 'btn btn-success', "data-loading-text" => "Loading..."

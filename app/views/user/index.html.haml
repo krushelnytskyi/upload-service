@@ -1,0 +1,56 @@
+.page-header Add new user
+
+.row
+  = form_for @user, url: '/users/manage' do |f|
+    .col-sm-2
+      = f.label :name
+      = f.text_field :name, class: 'form-control'
+    .col-sm-2
+      = f.label :email
+      = f.email_field :email, class: 'form-control'
+    .col-sm-2
+      = f.label :password
+      = f.password_field :password, class: 'form-control'
+    .col-sm-2
+      = f.label :role
+      = f.select :role, options_for_select(@user.class.roles), {}, {class: 'form-control'}
+    .col-sm-2
+      %br
+      = button_tag 'Add', class: 'btn btn-primary'
+
+
+.col-md-offset-9.col-md-3
+  = form_tag user_index_path, method: :get do
+    .input-group
+      = text_field_tag :search, params[:search], class: "form-control", placeholder: :search
+      = hidden_field_tag :active, params[:active]
+      .input-group-btn
+        = button_tag 'Search', class: 'btn btn-default'
+        = link_to 'Clear', user_index_path, class: 'btn btn-danger'
+%hr
+
+.panel.panel-info
+  .panel-heading
+    = @target_users_name
+    .btn-group.pull-right
+      = link_to 'Active users', user_index_path
+      = link_to 'Suspended users', user_index_path(active: :canceled)
+  - if @users.any?
+    %table.table
+      - @users.each do |u|
+        %tr
+          %td= link_to u.name, u
+          %td= u.email
+          %td= u.role.capitalize
+          %td
+            .form-group
+              = link_to 'Edit', edit_user_path(u), class: 'btn btn-info'
+              - if u.active
+                = link_to 'Revoke access', revoke_user_access_path(u), class: 'btn btn-warning', method: :posts
+              - else
+                = link_to 'Grant access', revoke_user_access_path(u, active: true), class: 'btn btn-warning', method: :posts
+  - else
+    .panel-body
+      %h4.text-muted= "There are no #{@target_users_name} available in database"
+  .panel-footer
+    .text-right= will_paginate @users

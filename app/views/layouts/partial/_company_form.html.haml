@@ -1,0 +1,7 @@
+= form_for company, url: '/company' do |f|
+  %div
+    = f.label :name
+    %br
+    = f.text_field :name, :autofocus => true, class: 'form-control'
+  %br
+  %div= f.submit "Save company", class: 'btn btn-success', "data-loading-text" => "Loading..."

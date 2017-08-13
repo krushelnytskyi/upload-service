@@ -1,0 +1,25 @@
+%h3= @user.name
+%h4.text-muted= @user.email
+
+.panel.panel-info
+  .panel-heading Uploaded files
+  - if @user.uploads.any?
+    %table.table
+      %tr
+        %th Company
+        %th Year
+        %th Date
+        %th Download
+      - @user_uploads.each do |upload|
+        %tr
+          %td= upload.company.name
+          %td= upload.year
+          %td= upload.created_at.strftime("%m/%d/%Y at %I:%M%p")
+          %td= link_to 'Download', upload, target: :_blank
+    
+  - else
+    .panel-body
+      %h3.text-muted User has no uploaded files yet
+  .panel-footer
+    .text-right= will_paginate @user_uploads
+
