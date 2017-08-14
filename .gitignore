@@ -14,7 +14,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
-/upload/*
+/uploads/*
 !/log/.keep
 !/tmp/.keep
 

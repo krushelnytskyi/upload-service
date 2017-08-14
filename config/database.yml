@@ -23,7 +23,8 @@ test:
   database: upload-service-test
 
 production:
-  <<: *default
-  username: vitalii
-  database: 'upload-service-dev'
-  password: '1234'
+  adapter: pg
+  host: ec2-54-247-119-245.eu-west-1.compute.amazonaws.com
+  username: bhaicvzxvrvupq
+  database: d1cprf39h6tb3m
+  password: a8e6f0e8e4e21eae290d6f2f189ca4a3fbc03f45827dd8e124f185033d8ba4c0
